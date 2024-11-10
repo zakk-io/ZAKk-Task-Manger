@@ -1,0 +1,16 @@
+{
+  "name": "zakk-task-manger",
+  "version": "1.0.0",
+  "description": "simple task manger api",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "author": "mozakk.io@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.1",
+    "mongoose": "^8.8.1",
+    "nodemon": "^3.1.7"
+  }
+}
