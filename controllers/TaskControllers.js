@@ -1,9 +1,14 @@
 const Task = require('../model/tasks')
-
+const xss = require('xss')
 
 const CreateTask = async (req,res) => {
     try {
-        const data = await new Task(req.body)
+        const clean_data = {
+            name :xss(req.body.name),
+            complate : req.body.complate
+        }
+
+        const data = await new Task(clean_data)
         const task = await data.save()
         res.status(201)
         res.json(task)
