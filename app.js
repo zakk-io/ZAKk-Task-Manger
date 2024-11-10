@@ -20,6 +20,14 @@ app.use(express.json())
 app.use(handleJsonSyntaxError)
 app.use(TaskRouters)
 
+app.get('/tasks',(req,res) => {
+    res.sendfile(path.join(__dirname,'public','index.html'))
+})
+
+app.get('/tasks/:id',(req,res) => {
+    res.sendfile(path.join(__dirname,'public','task.html'))
+})
+
 
 
 app.listen(5000,() => console.log("server listening on port 5000"))

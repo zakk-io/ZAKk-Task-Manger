@@ -4,6 +4,44 @@ const CreateForm = document.getElementById('task-form')
 const TaskName  = document.getElementById('task-input')
 
 
+
+
+//GET Tasks
+const tasks = document.getElementById('tasks')
+
+var ListTask = async function(){
+    const response = await fetch('/api/tasks',{
+        method : 'GET',
+        headers : {"Content-Type" : "application/json"},
+    })
+    
+    const TaskData = await response.json()
+    
+    let GetTasks = '';
+    for (let task = TaskData.length - 1; task >= 0; task--) {
+    
+        GetTasks += `<div class="single-task ${TaskData[task].completed && 'task-completed'}">
+                                <h5><span><i class="far fa-check-circle"></i></span>${TaskData[task].name}</h5>
+                                <div class="task-links">
+                                <!-- edit link -->
+                                <a href="tasks/${TaskData[task]._id}"  class="edit-link">
+                                <i class="fas fa-edit"></i>
+                                </a>
+                                <!-- delete btn -->
+                                <button type="button" class="delete-btn" data-id="${TaskData[task]._id}">
+                                <i class="fas fa-trash"></i>
+                                </button>
+                                </div>
+                            </div>`
+    }
+    tasks.innerHTML = GetTasks
+}
+//GET Tasks
+
+
+
+
+//CREATE Tasks
 CreateForm.addEventListener('submit',async (e) => {
     e.preventDefault()
     
@@ -22,6 +60,13 @@ CreateForm.addEventListener('submit',async (e) => {
     const TaskData = await response.json()
 
     if(response.status === 201){
+        ListTask()
         TaskName.value = '';
     }
 })
+//CREATE Tasks
+
+
+ListTask()
+
+
