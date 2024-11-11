@@ -1,6 +1,8 @@
 const Task = require('../model/tasks')
 const xss = require('xss')
 
+
+
 const CreateTask = async (req,res) => {
     try {
         const clean_data = {
@@ -28,6 +30,8 @@ const CreateTask = async (req,res) => {
 }
 
 
+
+
 const GetTasks = async (req,res) => {
     try {
         const tasks = await Task.find()
@@ -36,6 +40,7 @@ const GetTasks = async (req,res) => {
         res.json(error)
     }
 }
+
 
 
 const GetTasksByid = async (req,res) => {
@@ -56,7 +61,7 @@ const GetTasksByid = async (req,res) => {
             res.status(400)
             ErrorObject = {
                "error" : error.name,
-               "kind" : error.kind,
+               "type" : error.kind,
                "message" : error.message,
              }
              res.json(ErrorObject)
@@ -66,8 +71,49 @@ const GetTasksByid = async (req,res) => {
     }
 }
 
+
+
+
+
+const UpdateTask = async (req,res) => {
+    try {
+        const clean_data = {
+            name :xss(req.body.name),
+            complate : req.body.complate
+        }
+
+        const task = await Task.findByIdAndUpdate(req.params.id,clean_data,{new:true})
+        if(task){
+            res.json(task)
+          }else{
+            res.status(404)
+            res.json({
+              "status" : 404,
+              "message" : "Resourses Not Found"
+            })
+          }
+    } catch (error) {
+        if(error.name === 'CastError'){
+            res.status(400)
+            ErrorObject = {
+               "error" : error.name,
+               "type" : error.kind,
+               "message" : error.message,
+             }
+             res.json(ErrorObject)
+        }else{
+            res.json(error)
+        }    
+    }
+    
+}
+
+
+
+
 module.exports = {
     CreateTask,
     GetTasks,
     GetTasksByid,
+    UpdateTask,
 }

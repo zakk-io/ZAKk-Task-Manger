@@ -8,6 +8,7 @@ const TaskControllers = require('../controllers/TaskControllers')
 router.post('/api/tasks',TaskControllers.CreateTask)
 router.get('/api/tasks',TaskControllers.GetTasks)
 router.get('/api/tasks/:id',TaskControllers.GetTasksByid)
+router.put('/api/tasks/:id',TaskControllers.UpdateTask)
 
 
 
