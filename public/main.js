@@ -21,7 +21,7 @@ var ListTask = async function(){
         complate = TaskData[task].complate
 
 
-        GetTasks += `<div class="single-task ${complate && 'task-completed'}">
+        GetTasks += `<div class="single-task ${complate}">
                                 <h5><span><i class="far fa-check-circle"></i></span>${clean_name}</h5>
                                 <div class="task-links">
                                 <!-- edit link -->
@@ -29,7 +29,7 @@ var ListTask = async function(){
                                 <i class="fas fa-edit"></i>
                                 </a>
                                 <!-- delete btn -->
-                                <button type="button" class="delete-btn" data-id="${TaskData[task]._id}">
+                                <button type="button"  class="delete-btn" id="delete-btn" data-id="${TaskData[task]._id}" onclick="DeleteTask('${TaskData[task]._id}','${clean_name}')">
                                 <i class="fas fa-trash"></i>
                                 </button>
                                 </div>
@@ -38,6 +38,7 @@ var ListTask = async function(){
     tasks.innerHTML = GetTasks
 }
 //GET Tasks
+
 
 
 
@@ -71,6 +72,34 @@ CreateForm.addEventListener('submit',async (e) => {
 
 
 ListTask()
+
+
+
+
+
+
+const DeleteTask = async function(taskid,taskname){
+    let userconfirm = confirm(`are you sure you want to delete task  '${taskname}'?`)
+    if(!userconfirm){
+        return;
+    }
+    //delete task from database
+    const response = await fetch(`/api/tasks/${taskid}`,{
+        method : 'DELETE',
+        headers : {"Content-Type" : "application/json"},
+    })
+
+    if (response.status === 200) {
+        //delete task from the dom
+        const TaskEelement = document.querySelector(`[data-id="${taskid}"]`).closest('.single-task')
+        if(TaskEelement){
+            TaskEelement.remove()
+        }
+    } else {
+        alert("Something went wrong while deleting the task!");
+    }
+}
+
 
 
 

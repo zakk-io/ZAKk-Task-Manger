@@ -115,6 +115,26 @@ const UpdateTask = async (req,res) => {
 }
 
 
+const DeleteTask = async (req,res) => {
+    try {
+      const task = await Task.findByIdAndDelete(req.params.id)
+      if(task){
+        res.json({
+            "message" : "task deleted!"
+          })
+      }else{
+        res.status(404)
+        res.json({
+          "status" : 404,
+          "message" : "Resourses Not Found"
+        })
+      }
+    } catch (error) {
+        res.json(error)
+    }
+    
+}
+
 
 
 module.exports = {
@@ -122,4 +142,5 @@ module.exports = {
     GetTasks,
     GetTasksByid,
     UpdateTask,
+    DeleteTask
 }

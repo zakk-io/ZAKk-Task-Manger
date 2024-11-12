@@ -1,7 +1,3 @@
-PUT http://127.0.0.1:5000/api/tasks/6731318c3006759add2c748b
+DELETE  http://127.0.0.1:5000/api/tasks/67320d50af1fa0763ee71a97
 Content-Type: application/json
 
-{
-    "name" : {},
-    "complate" : true
-}
