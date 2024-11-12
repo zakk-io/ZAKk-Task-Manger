@@ -4,7 +4,8 @@
   "description": "simple task manger api",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "author": "mozakk.io@gmail.com",
   "license": "ISC",
