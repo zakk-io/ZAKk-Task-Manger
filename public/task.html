@@ -10,23 +10,23 @@
     <!-- main  -->
     <link rel="stylesheet" href="/main.css" />
 
-    <title>Edit Task || Final</title>
+    <title>Edit Task</title>
   </head>
   <body>
     <div class="container">
-      <form class="single-task-form">
+      <form class="single-task-form" id="single-task-form" method="post">
         <h4>Edit Task</h4>
         <div class="form-control">
           <label>Task ID</label>
-          <p class="task-edit-id"></p>
+          <p class="task-edit-id" id="task-edit-id"></p>
         </div>
         <div class="form-control">
           <label for="name">Name</label>
-          <input type="text" name="name" class="task-edit-name" />
+          <input type="text" name="name" id="task-edit-name" class="task-edit-name" />
         </div>
-        <div class="form-control">
+        <div class="form-control" id="update-form">
           <label for="completed">completed</label>
-          <input type="checkbox" name="completed" class="task-edit-completed" />
+          <input type="checkbox" name="completed" id="task-edit-completed" class="task-edit-completed" />
         </div>
         <button type="submit" class="block btn task-edit-btn">edit</button>
         <div class="form-alert"></div>
@@ -34,5 +34,7 @@
       <a href="/tasks" class="btn back-link">back to tasks</a>
     </div>
     <!-- js -->
+
+    <script src="/update-task.js"></script>
   </body>
 </html>

@@ -15,15 +15,17 @@ const CreateTask = async (req,res) => {
         res.status(201)
         res.json(task)
     } catch (error) {
-        if(error.name === 'ValidationError'){
-           res.status(400)
-           ErrorObject = {
-              "error" : error.name,
-              "type" : error._message,
-              "message" : error.message,
-            }
+        res.status(400)
+        ErrorObject = {
+            "error" : error.name,
+            "type" : error._message || error.kind,
+            "message" : error.message,
+        }
+        if(error.name === 'ValidationError' || error.name === 'CastError'){
             res.json(ErrorObject)
-        }else{
+        }
+
+        else{
             res.json(error)
         }
     }
@@ -82,7 +84,7 @@ const UpdateTask = async (req,res) => {
             complate : req.body.complate
         }
 
-        const task = await Task.findByIdAndUpdate(req.params.id,clean_data,{new:true})
+        const task = await Task.findByIdAndUpdate(req.params.id,clean_data,{new:true , runValidators : true})
         if(task){
             res.json(task)
           }else{
@@ -92,16 +94,20 @@ const UpdateTask = async (req,res) => {
               "message" : "Resourses Not Found"
             })
           }
+
     } catch (error) {
-        if(error.name === 'CastError'){
-            res.status(400)
-            ErrorObject = {
-               "error" : error.name,
-               "type" : error.kind,
-               "message" : error.message,
-             }
-             res.json(ErrorObject)
-        }else{
+        res.status(400)
+        ErrorObject = {
+            "error" : error.name,
+            "type" : error._message || error.kind,
+            "message" : error.message,
+        }
+
+        if(error.name === 'ValidationError' || error.name === 'CastError'){
+            res.json(ErrorObject)
+        }
+
+        else{
             res.json(error)
         }    
     }

@@ -1,5 +1,4 @@
 
-
 const CreateForm = document.getElementById('task-form')
 const TaskName  = document.getElementById('task-input')
 
@@ -16,12 +15,14 @@ var ListTask = async function(){
     })
     
     const TaskData = await response.json()
-    
     let GetTasks = '';
     for (let task = TaskData.length - 1; task >= 0; task--) {
-    
-        GetTasks += `<div class="single-task ${TaskData[task].completed && 'task-completed'}">
-                                <h5><span><i class="far fa-check-circle"></i></span>${TaskData[task].name}</h5>
+        clean_name = DOMPurify.sanitize(TaskData[task].name,{ ALLOWED_TAGS: [] })
+        complate = TaskData[task].complate
+
+
+        GetTasks += `<div class="single-task ${complate && 'task-completed'}">
+                                <h5><span><i class="far fa-check-circle"></i></span>${clean_name}</h5>
                                 <div class="task-links">
                                 <!-- edit link -->
                                 <a href="tasks/${TaskData[task]._id}"  class="edit-link">
@@ -45,6 +46,8 @@ var ListTask = async function(){
 CreateForm.addEventListener('submit',async (e) => {
     e.preventDefault()
     
+
+
     const task = {
         name : TaskName.value,
         complate : false
@@ -68,5 +71,11 @@ CreateForm.addEventListener('submit',async (e) => {
 
 
 ListTask()
+
+
+
+
+
+
 
 
